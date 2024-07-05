@@ -25,6 +25,15 @@ const Taskrow: React.FC<any> = (props: Props) => {
   const deleteTaskInComponent = (value: string) => {
     props.deleteTaskInComponentTasks(taskRow._id!)
   }
+//rajouter appel de la fonction updateTaskRow sur le bouton modifier dnas TaskRow.tsx
+const updateTaskRow = async (value: string) => {
+  //aeguments
+  //isModified:boolean 
+  //task:Itask
+  props.updateTaskRow(true, taskRow);
+}
+
+
   //  <div className="header"><p >Liste des tâches</p></div>
 
   return (
@@ -43,7 +52,8 @@ const Taskrow: React.FC<any> = (props: Props) => {
       <td>
         {taskRow.date}
       </td>
-      <td><button className="otherButtonValidate">Modifier</button></td>
+
+      <td><button onClick={() => updateTaskRow('updateRow')} className="otherButtonValidate">Modifier</button></td>
       <td><button onClick={() => deleteTaskInComponent('remove')} className="otherButtonValidate">Supprimer</button></td>
 
     </tr>

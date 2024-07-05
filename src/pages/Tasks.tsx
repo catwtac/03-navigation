@@ -6,9 +6,11 @@ import Taskrow from '../components/TaskRow';
 
 const Tasks: React.FC = () => {
     const [listTasks, setListTasks] = useState<ITask[]>([]);
-
+    const [taskToPass, setTaskToPass] = useState<ITask>({ title: '', date: '' });
+    const [isModified, setIsModified] = useState(false);
     const [modalDeleteStyle, setModalDeleteStyle] = useState('modalDeleteHidden');
     const [idTaskToDelete, setIdTaskToDelete] = useState('');
+
 
     const addTaskInComponentTasks = async (taskToAdd: ITask) => {
         let task = await addTask(taskToAdd);
@@ -27,6 +29,13 @@ const Tasks: React.FC = () => {
         setModalDeleteStyle('modalDeleteVisible');
         setIdTaskToDelete(idRowTask);
     };
+
+    const updateTaskRow = (isModified: boolean, taskRow: ITask) => {
+        setTaskToPass(taskRow)
+        setIsModified(isModified)
+    }
+
+
     //cache le modal de suppresion
     const hideModalDelete = () => {
         setModalDeleteStyle('modalDeleteHidden');
@@ -60,7 +69,7 @@ const Tasks: React.FC = () => {
 
     return (
         <div>
-            <TaskForm addTaskInComponentTasks={(taskToAdd: ITask) => addTaskInComponentTasks(taskToAdd)} />
+            <TaskForm  task= {taskToPass} isModified= {isModified}  addTaskInComponentTasks={(taskToAdd: ITask) => addTaskInComponentTasks(taskToAdd)} />
             <div id="supprimerflorian" className={modalDeleteStyle}>
                 <div id="popup">
                     <div id="title">Etes-vous sûr de vouloir supprimer la tâche ?</div>
@@ -89,10 +98,11 @@ const Tasks: React.FC = () => {
                 </thead>
                 <tbody>
                     {listTasks.map((taskRow: ITask) => (
-                        <Taskrow 
-                            taskRow={taskRow} 
+                        <Taskrow
+                            taskRow={taskRow}
                             deleteTaskInComponentTasks={(id: string) => deleteTaskInComponentTasks(id)}
-                            updateTaskCheckbox={(taskRow: ITask) => updateTaskCheckbox(taskRow)} 
+                            updateTaskCheckbox={(taskRow: ITask) => updateTaskCheckbox(taskRow)}
+                            updateTaskRow={(isModified: boolean, taskRow: ITask) => updateTaskRow(isModified, taskRow)}
                             key={taskRow._id}
                         />
                     ))}
