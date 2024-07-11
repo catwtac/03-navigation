@@ -52,6 +52,9 @@ const updateTaskRow = async (value: string) => {
       <td>
         {taskRow.date}
       </td>
+      <td>
+        {taskRow.priority}
+      </td>
 
       <td><button onClick={() => updateTaskRow('updateRow')} className="otherButtonValidate">Modifier</button></td>
       <td><button onClick={() => deleteTaskInComponent('remove')} className="otherButtonValidate">Supprimer</button></td>
